@@ -1,0 +1,329 @@
+# ====================================
+# .gitignore for Data Science Project
+# ====================================
+
+# ====================================
+# PYTHON
+# ====================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# ====================================
+# JUPYTER NOTEBOOKS
+# ====================================
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Jupyter Lab
+.jupyter/
+.local/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# ====================================
+# DATA FILES
+# ====================================
+
+# Large data files (track in Git LFS or externally)
+data/raw/*.csv
+data/raw/*.xlsx
+data/raw/*.xls
+data/raw/*.json
+data/raw/*.parquet
+
+# Processed data (can be regenerated)
+data/interim/*.csv
+data/interim/*.pkl
+data/processed/*.csv
+data/processed/*.pkl
+
+# External data
+data/external/*
+
+# Keep .gitkeep files to preserve directory structure
+!**/.gitkeep
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# ====================================
+# MODELS
+# ====================================
+
+# Trained models (too large for git)
+models/*.pkl
+models/*.h5
+models/*.pt
+models/*.pth
+models/*.joblib
+models/*.sav
+models/*.model
+
+# Model checkpoints
+checkpoints/
+*.ckpt
+
+# Keep model metadata
+!models/model_metadata.json
+!models/README.md
+
+# ====================================
+# REPORTS & OUTPUTS
+# ====================================
+
+# Generated figures (can be regenerated)
+reports/figures/**/*.png
+reports/figures/**/*.jpg
+reports/figures/**/*.pdf
+reports/figures/**/*.svg
+
+# Keep example figures
+!reports/figures/examples/
+
+# Generated reports
+reports/*.pdf
+reports/*.html
+
+# Keep template reports
+!reports/templates/
+
+# Logs
+logs/
+*.log
+
+# ====================================
+# IDEs & EDITORS
+# ====================================
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ====================================
+# OPERATING SYSTEMS
+# ====================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ====================================
+# CONDA
+# ====================================
+.conda/
+
+# ====================================
+# SECRETS & CREDENTIALS
+# ====================================
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# API keys
+*.key
+*.pem
+secrets/
+credentials/
+
+# Config with sensitive data
+config/secrets.py
+config/credentials.json
+
+# ====================================
+# TEMPORARY FILES
+# ====================================
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.cache
+
+# Scratch notebooks
+scratch/
+experiments/
+playground/
+
+# ====================================
+# DOCUMENTATION
+# ====================================
+
+# Build documentation
+docs/_build/
+docs/.doctrees/
+site/
+
+# ====================================
+# MISC
+# ====================================
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+
+# Large datasets (use Git LFS if needed)
+*.h5
+*.hdf5
+*.feather
+
+# Pickle files (can contain sensitive data)
+*.pickle
+
+# ====================================
+# PROJECT SPECIFIC
+# ====================================
+
+# Competition data (if from Kaggle)
+input/
+submission/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# DVC (Data Version Control)
+.dvc/
+*.dvc
+
+# Weights & Biases
+wandb/
+
+# TensorBoard
+runs/
+tensorboard/
+
+# ====================================
+# KEEP THESE FILES
+# ====================================
+
+# Don't ignore these important files
+!.gitignore
+!.gitattributes
+!requirements.txt
+!environment.yml
+!README.md
+!LICENSE
+!setup.py
+!Makefile
+
+# Keep empty directories with .gitkeep
+!**/.gitkeep
+
+# ====================================
+# NOTES
+# ====================================
+# 
+# This .gitignore is optimized for:
+# - Data Science projects
+# - Jupyter notebooks
+# - Machine learning models
+# - Large datasets
+# 
+# Remember to:
+# 1. Use Git LFS for large files
+# 2. Store sensitive data in .env
+# 3. Document data sources in README
+# 4. Keep small sample data in repo
+# ====================================

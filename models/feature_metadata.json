@@ -1,0 +1,29 @@
+{
+  "total_features": 41,
+  "new_features_created": 26,
+  "numeric_features": 33,
+  "categorical_features": 7,
+  "feature_groups": {
+    "area_features": 4,
+    "room_features": 3,
+    "floor_features": 7,
+    "city_features": 5,
+    "price_features": 4,
+    "interaction_features": 4
+  },
+  "top_5_correlations": {
+    "price_deviation_from_city_avg": 0.8589103122044903,
+    "price_ratio_to_city": 0.8064235117374404,
+    "price_per_sqm_log": 0.7123510466761508,
+    "area": 0.7118513857934515,
+    "price_per_sqm": 0.7100842000068788
+  },
+  "encoded_features": [
+    "city",
+    "room_type",
+    "area_category",
+    "building_height_category",
+    "city_size",
+    "price_segment"
+  ]
+}
