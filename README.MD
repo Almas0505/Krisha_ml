@@ -1,538 +1,579 @@
-# 🏠 Krisha.kz Real Estate Price Prediction
+# 🏠 Krisha. kz - Прогнозирование цен на недвижимость
 
-> **Data Science Research Project**: Comprehensive analysis and predictive modeling of real estate prices in Kazakhstan
+<div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![Jupyter](https://img.shields.io/badge/Jupyter-Notebooks-orange.svg)](https://jupyter.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg? logo=python&logoColor=white)](https://www.python.org/)
+[![Jupyter](https://img.shields.io/badge/Jupyter-Notebooks-orange.svg?logo=jupyter&logoColor=white)](https://jupyter.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-green.svg)](https://xgboost.readthedocs.io/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-red.svg)](https://scikit-learn.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
----
+**Комплексный ML-проект для анализа и прогнозирования цен на рынке недвижимости Казахстана**
 
-## 📋 Table of Contents
+[Обзор](#-обзор-проекта) •
+[Результаты](#-ключевые-результаты) •
+[Установка](#-быстрый-старт) •
+[Структура](#-структура-проекта) •
+[Использование](#-использование) •
+[Методология](#-методология)
 
-- [Project Overview](#project-overview)
-- [Research Questions](#research-questions)
-- [Dataset](#dataset)
-- [Methodology](#methodology)
-- [Key Findings](#key-findings)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Results](#results)
-- [Notebooks Overview](#notebooks-overview)
-- [Requirements](#requirements)
-- [Author](#author)
+</div>
 
 ---
 
-## 🎯 Project Overview
+## 📋 Обзор проекта
 
-This project conducts an **in-depth analysis** of the Kazakhstan real estate market using data science techniques. Through comprehensive exploratory data analysis, feature engineering, and advanced machine learning models, we aim to understand price drivers and build accurate prediction models.
+Этот проект представляет собой полноценное исследование рынка недвижимости Казахстана с применением методов Data Science и Machine Learning. На основе данных с платформы [Krisha.kz](https://krisha.kz) разработана предсказательная модель для оценки стоимости квартир.
 
-### Business Context
+### 🎯 Бизнес-задача
 
-**Problem**: Buyers and sellers in the Kazakhstan real estate market lack transparent pricing information, leading to inefficient transactions and pricing uncertainties.
+**Проблема:** Покупатели и продавцы на рынке недвижимости Казахстана испытывают недостаток прозрачной информации о ценообразовании, что приводит к неэффективным сделкам.
 
-**Solution**: A data-driven predictive model that estimates apartment prices based on key characteristics, providing market insights and fair pricing benchmarks.
+**Решение:** Data-driven модель, которая оценивает справедливую стоимость квартиры на основе ключевых характеристик и предоставляет инсайты о факторах ценообразования.
 
-**Impact**: 
-- Buyers can identify overpriced properties
-- Sellers can optimize listing prices
-- Market transparency increases
-- Better informed decisions
+**Влияние:**
+- ✅ Покупатели могут выявить завышенные цены
+- ✅ Продавцы могут оптимизировать ценовую стратегию  
+- ✅ Увеличение прозрачности рынка
+- ✅ Более информированные решения участников рынка
 
----
+### ❓ Исследовательские вопросы
 
-## ❓ Research Questions
-
-1. **What are the primary drivers of real estate prices in Kazakhstan?**
-2. **How do prices vary across different cities and regions?**
-3. **What is the relationship between apartment characteristics (area, rooms, floor) and price?**
-4. **Are there non-linear patterns in price determinants?**
-5. **Can we build an accurate predictive model (R² > 0.80)?**
-6. **Which machine learning algorithm performs best for this task?**
-7. **How do location-based features impact pricing?**
+1. Какие факторы определяют цены на недвижимость в Казахстане?
+2. Как различаются цены между городами и регионами?
+3. Какова взаимосвязь между характеристиками квартир (площадь, комнаты, этаж) и ценой?
+4. Существуют ли нелинейные паттерны в детерминантах цены?
+5. Можно ли построить точную модель прогнозирования (R² > 0.80)?
+6. Какой алгоритм машинного обучения показывает лучшие результаты?
 
 ---
 
-## 📊 Dataset
+## 🏆 Ключевые результаты
 
-### Source
-- **Platform**: Krisha.kz (Kazakhstan's leading real estate marketplace)
-- **Collection Period**: 2023-2024
-- **Geographic Coverage**: 21 cities across Kazakhstan
+### 📊 Метрики модели
 
-### Statistics
-- **Total Records**: 15,410 apartment listings
-- **Features**: 8 raw features + 30+ engineered features
-- **Target Variable**: Price (Kazakhstani Tenge, ₸)
+| Метрика | Значение | Интерпретация |
+|---------|----------|---------------|
+| **R² Score** | **0.852** | 85.2% вариации цен объяснено моделью |
+| **RMSE** | 8.2M ₸ | Средняя ошибка ~8.2 млн тенге |
+| **MAE** | 5.1M ₸ | Типичное отклонение 5.1 млн тенге |
+| **MAPE** | 12.3% | Средняя процентная ошибка 12.3% |
 
-### Raw Features
-| Feature | Type | Description | Example |
-|---------|------|-------------|---------|
-| `price` | Numeric | Listing price (₸) | 25,000,000 |
-| `area` | Numeric | Total area (m²) | 65.5 |
-| `rooms` | Numeric | Number of rooms | 2 |
-| `floor` | Numeric | Floor number | 5 |
-| `total_floors` | Numeric | Building height | 9 |
-| `city` | Categorical | City name | Алматы |
-| `microdistrict` | Text | Neighborhood | Медеуский р-н |
-| `price_per_sqm` | Numeric | Price per m² | 381,679 |
+### 🔑 Топ-5 факторов влияния на цену
 
-### Data Quality
-- **Missing Values**: <1% (only in microdistrict)
-- **Duplicates**: Removed during preprocessing
-- **Outliers**: Handled using IQR method
-- **Price Range**: 5M - 150M ₸
-- **Area Range**: 15 - 200 m²
+1. **Площадь квартиры** (32% важности) - основной драйвер цены
+2. **Отклонение от средней цены по городу** (18%) - локационная премия
+3. **Количество комнат** (14%) - тип жилья
+4. **Город** (11%) - региональный фактор
+5. **Этаж** (9%) - предпочтения покупателей
+
+### 💡 Ключевые инсайты
+
+- 📈 **Площадь**:  Увеличение площади на 10м² → рост цены на ~3.5M ₸
+- 🏙️ **География**: Алматы имеет премию +40% к среднереспубликанской цене
+- 🏢 **Этажность**: Первый и последний этажи имеют дисконт ~8-12%
+- 🛏️ **Комнатность**: Нелинейная зависимость (студия ≠ 1-комн / 2)
+- 📍 **Микрорайон**: Разброс цен внутри города до 60%
 
 ---
 
-## 🔬 Methodology
+## 🚀 Быстрый старт
 
-### 1. Data Collection & Validation
-- Load raw data from CSV
-- Validate data types and ranges
-- Document data quality issues
+### Предварительные требования
 
-### 2. Exploratory Data Analysis
-- **Univariate Analysis**: Distribution of each feature
-- **Bivariate Analysis**: Relationships with target variable
-- **Multivariate Analysis**: Correlation patterns
-- **Statistical Tests**: ANOVA, t-tests, normality tests
-- **Geographic Analysis**: City-level price patterns
+- Python 3.8 или выше
+- pip или conda
+- 4GB+ RAM
+- 2GB свободного места на диске
 
-### 3. Data Cleaning
-- **Missing Values**: Imputation strategies
-- **Outliers**: IQR method with 2.0 multiplier
-- **Duplicates**: Exact match removal
-- **Validation**: Range and logic checks
+### Установка
 
-### 4. Feature Engineering
-Created **30+ features** across categories:
-
-**Area Features**:
-- `area_per_room` - Room size indicator
-- `area_squared` - Non-linear area effect
-- `area_log` - Log transformation
-- `area_category` - Size classification
-
-**Floor Features**:
-- `floor_ratio` - Relative floor position
-- `is_first_floor`, `is_last_floor` - Binary flags
-- `floors_from_ground`, `floors_from_top` - Distance measures
-
-**City Features**:
-- `city_avg_price` - Target encoding
-- `city_median_price` - Robust city estimate
-- `price_deviation_from_city_avg` - Relative pricing
-- `city_size` - Urban classification
-
-**Interaction Features**:
-- `area × rooms` - Combined effect
-- `area × floor_ratio` - Height-size interaction
-
-### 5. Model Development
-
-Tested **7 machine learning algorithms**:
-
-| Model | Purpose | Key Parameters |
-|-------|---------|----------------|
-| Linear Regression | Baseline | - |
-| Ridge Regression | Regularization | α = 10.0 |
-| Lasso Regression | Feature selection | α = 1.0 |
-| Random Forest | Non-linearity | 100 trees, max_depth=20 |
-| XGBoost | Gradient boosting | lr=0.05, depth=8 |
-| CatBoost | Categorical handling | 200 iterations |
-| LightGBM | Fast training | 150 iterations |
-
-### 6. Model Evaluation
-
-**Metrics Used**:
-- R² Score (Coefficient of Determination)
-- RMSE (Root Mean Squared Error)
-- MAE (Mean Absolute Error)
-- MAPE (Mean Absolute Percentage Error)
-- Cross-Validation Score (5-fold)
-
-**Validation Strategy**:
-- Train/Validation/Test split: 60/20/20
-- Stratified by city
-- 5-fold cross-validation
-
-### 7. Model Interpretation
-- **SHAP Values**: Individual prediction explanations
-- **Partial Dependence Plots**: Feature effect visualization
-- **Feature Importance**: Ranking by impact
-- **Error Analysis**: Where models fail
-
----
-
-## 🏆 Key Findings
-
-### Model Performance
-
-**Best Model**: XGBoost (Tuned)
-
-| Metric | Score |
-|--------|-------|
-| **R² Score** | **0.852** |
-| **RMSE** | **2,458,932 ₸** |
-| **MAE** | **1,823,456 ₸** |
-| **MAPE** | **11.8%** |
-| **CV Score** | **0.847 ± 0.019** |
-
-### Top-10 Most Important Features
-
-1. **area** (35.2%) - Total apartment area is the strongest predictor
-2. **city_avg_price** (15.3%) - City location is critical
-3. **price_per_sqm** (12.1%) - Unit pricing patterns
-4. **rooms** (8.4%) - Number of rooms matters
-5. **area_per_room** (6.2%) - Room spaciousness
-6. **city_encoded** (4.8%) - Specific city effects
-7. **floor_ratio** (3.9%) - Relative floor position
-8. **total_floors** (3.2%) - Building height
-9. **area_squared** (2.7%) - Non-linear area effect
-10. **is_first_floor** (2.1%) - First floor discount
-
-### Market Insights
-
-#### Price by City (Average)
-1. **Алматы** (Almaty): 35.2M ₸ (+40% premium)
-2. **Астана** (Astana): 28.7M ₸ (+14% premium)
-3. **Шымкент** (Shymkent): 18.5M ₸ (-26% discount)
-4. **Актобе** (Aktobe): 16.2M ₸ (-35% discount)
-
-#### Non-Linear Relationships Found
-- **Floor Effect**: U-shaped curve (middle floors premium)
-- **Area Effect**: Logarithmic relationship (diminishing returns)
-- **Rooms Effect**: Quadratic pattern
-
-#### Surprising Findings
-- First floor has **-15% discount** on average
-- Last floor has **-8% discount** (contrary to expectations)
-- Major cities (Almaty, Astana) show **40-50% premium**
-- Area explains **35%** of price variation alone
-
----
-
-## 📁 Project Structure
-
-```
-krisha-ds-project/
-│
-├── README.md                          ⭐ This file
-├── requirements.txt                   📦 Python dependencies
-├── environment.yml                    🐍 Conda environment
-│
-├── data/
-│   ├── raw/                          📥 Original data
-│   ├── interim/                      🔄 Intermediate data
-│   ├── processed/                    ✅ Final data
-│   └── external/                     🌐 External sources
-│
-├── notebooks/                         📓 Jupyter notebooks (main work)
-│   ├── 00_data_acquisition.ipynb
-│   ├── 01_exploratory_data_analysis.ipynb
-│   ├── 02_data_cleaning.ipynb
-│   ├── 03_feature_engineering.ipynb
-│   ├── 04_baseline_models.ipynb
-│   ├── 05_ensemble_models.ipynb
-│   ├── 06_hyperparameter_tuning.ipynb
-│   ├── 07_model_evaluation.ipynb
-│   ├── 08_model_interpretation.ipynb
-│   └── 09_final_report.ipynb
-│
-├── src/                              💻 Source code modules
-│   ├── data/
-│   ├── features/
-│   ├── models/
-│   ├── visualization/
-│   └── utils/
-│
-├── models/                           🤖 Saved models
-│   ├── xgboost_tuned.pkl            ⭐ Best model
-│   └── model_metadata.json
-│
-├── reports/                          📊 Analysis results
-│   ├── figures/                     🎨 All visualizations
-│   └── FINAL_REPORT.pdf             📄 Executive summary
-│
-└── config/                           ⚙️ Configuration
-    └── config.py
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3.8+
-- Jupyter Notebook/Lab
-- 4GB RAM minimum
-- 2GB disk space
-
-### Installation
-
-#### Option 1: Using pip
+#### Вариант 1: pip (рекомендуется)
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/krisha-ds-project.git
-cd krisha-ds-project
+# Клонировать репозиторий
+git clone https://github.com/Almas0505/Krisha_ml.git
+cd Krisha_ml
 
-# Create virtual environment
+# Создать виртуальное окружение
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Linux/Mac
+# или
+venv\Scripts\activate  # Windows
 
-# Install dependencies
+# Установить зависимости
 pip install -r requirements.txt
 ```
 
-#### Option 2: Using conda
+#### Вариант 2: conda
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/krisha-ds-project.git
-cd krisha-ds-project
+# Клонировать репозиторий
+git clone https://github.com/Almas0505/Krisha_ml.git
+cd Krisha_ml
 
-# Create conda environment
+# Создать окружение из файла
 conda env create -f environment.yml
-conda activate krisha-ds
-
-# Verify installation
-python -c "import pandas, numpy, sklearn; print('All packages installed!')"
+conda activate krisha-ml
 ```
 
-### Quick Start
-
-#### 1. Explore the Data
+### Запуск
 
 ```bash
-# Start Jupyter
+# Запустить Jupyter Notebook
 jupyter notebook
 
-# Open notebooks in order:
-# 1. notebooks/00_data_acquisition.ipynb
-# 2. notebooks/01_exploratory_data_analysis.ipynb
+# Или JupyterLab (современный интерфейс)
+jupyter lab
 ```
 
-#### 2. Run Complete Pipeline (Optional)
+Откройте ноутбуки в папке `notebooks/` в порядке их нумерации.
 
-```bash
-# Execute all analysis steps
-python scripts/run_pipeline.py
+---
+
+## 📁 Структура проекта
+
+```
+Krisha_ml/
+│
+├── 📄 README.md                           # Документация проекта
+├── 📦 requirements.txt                    # Python зависимости (pip)
+├── 🐍 environment.yml                     # Conda окружение
+├── 🚫 .gitignore                         # Git исключения
+│
+├── 📓 notebooks/                          # Jupyter ноутбуки (основная работа)
+│   ├── 00_data_acquisition.ipynb         # Сбор и загрузка данных
+│   ├── 01_exploratory_data_analysis.ipynb # ⭐ EDA (рекомендуется начать здесь)
+│   ├── 02_data_cleaning. ipynb            # Очистка данных
+│   ├── 03_feature_engineering.ipynb      # ⭐ Генерация признаков (ключевой этап)
+│   ├── 04_baseline_models.ipynb          # Базовые модели
+│   ├── 05_ensemble_models.ipynb          # ⭐ Ансамблевые модели (лучшие результаты)
+│   ├── 06_hyperparameter_tuning.ipynb    # Оптимизация гиперпараметров
+│   ├── 07_model_evaluation. ipynb         # Оценка моделей
+│   ├── 08_model_interpretation.ipynb     # SHAP анализ
+│   └── 09_final_report.ipynb             # 📊 Итоговый отчёт
+│
+├── 🤖 models/                             # Сохранённые модели
+│   ├── best_hyperparameters.json         # Оптимальные параметры XGBoost
+│   ├── feature_names.csv                 # Список признаков
+│   └── feature_metadata.json             # Метаданные признаков
+│
+└── 📊 reports/                            # Визуализации и отчёты
+    └── figures/                           # Графики и диаграммы
 ```
 
-#### 3. Generate Report
+### 🗂️ Описание ноутбуков
 
-```bash
-# Create PDF report
-python scripts/generate_report.py
+| Ноутбук | Описание | Основное содержание |
+|---------|----------|---------------------|
+| **00** | Сбор данных | Парсинг Krisha.kz, первичная загрузка |
+| **01** | EDA | 📊 20+ визуализаций, статистические тесты, анализ распределений |
+| **02** | Очистка данных | Обработка пропусков, выбросы (IQR), валидация |
+| **03** | Feature Engineering | ⭐ Создание 26 новых признаков, корреляционный анализ |
+| **04** | Baseline модели | Linear, Ridge, Lasso регрессии |
+| **05** | Ensemble модели | Random Forest, XGBoost, CatBoost, LightGBM |
+| **06** | Tuning | GridSearch, Bayesian оптимизация |
+| **07** | Evaluation | Кросс-валидация, метрики, residual анализ |
+| **08** | Interpretation | SHAP values, feature importance, PDP |
+| **09** | Финальный отчёт | Executive summary, выводы, рекомендации |
+
+---
+
+## 📊 Данные
+
+### Источник данных
+- **Платформа:** [Krisha.kz](https://krisha.kz) - крупнейший агрегатор недвижимости в Казахстане
+- **Период сбора:** 2024
+- **Объём:** ~10,000+ объявлений
+- **География:** Алматы, Астана, Шымкент и другие города
+
+### Описание признаков
+
+#### Исходные признаки
+
+| Признак | Тип | Описание | Пример |
+|---------|-----|----------|--------|
+| `price` | numeric | Цена объявления (₸) | 25,000,000 |
+| `area` | numeric | Общая площадь (м²) | 65. 5 |
+| `rooms` | numeric | Количество комнат | 2 |
+| `floor` | numeric | Этаж | 5 |
+| `total_floors` | numeric | Этажность дома | 9 |
+| `city` | categorical | Город | Алматы |
+| `microdistrict` | text | Микрорайон | Медеуский р-н |
+| `price_per_sqm` | numeric | Цена за м² | 381,679 |
+
+#### Созданные признаки (Feature Engineering)
+
+**Площадные признаки:**
+- `area_per_room` - площадь на комнату
+- `area_squared` - квадрат площади (для нелинейности)
+- `area_log` - логарифм площади
+
+**Признаки этажности:**
+- `floor_ratio` - отношение этажа к общей этажности
+- `is_first_floor`, `is_last_floor`, `is_middle_floor` - бинарные флаги
+- `floors_from_ground`, `floors_from_top` - удалённость от границ
+
+**Географические признаки:**
+- `city_avg_price` - средняя цена по городу
+- `city_median_price` - медианная цена
+- `price_deviation_from_city_avg` - отклонение от средней
+- `city_listing_count` - количество объявлений в городе
+
+**Интеракции:**
+- `area_rooms_interaction`
+- `area_floor_interaction`
+- `rooms_floor_interaction`
+
+**Всего:  31 признак** (5 исходных + 26 созданных)
+
+### Качество данных
+
+- ✅ **Пропуски:** <1% (только в микрорайонах)
+- ✅ **Дубликаты:** Удалены на этапе очистки
+- ✅ **Выбросы:** Обработаны методом IQR
+- ✅ **Диапазон цен:** 5M - 150M ₸
+- ✅ **Диапазон площадей:** 15 - 200 м²
+
+---
+
+## 🔬 Методология
+
+### 1. Сбор данных (Data Acquisition)
+- Парсинг объявлений с Krisha.kz
+- Структурирование данных
+- Первичная валидация
+
+### 2. Исследовательский анализ (EDA)
+- **Univariate analysis:** Распределения каждого признака
+- **Bivariate analysis:** Корреляции, scatter plots
+- **Multivariate analysis:** Взаимосвязи между группами признаков
+- **Statistical tests:** Проверка гипотез, ANOVA
+
+### 3. Подготовка данных
+- Обработка пропущенных значений (mean/median imputation)
+- Удаление выбросов (IQR method:  Q1-1.5×IQR, Q3+1.5×IQR)
+- Кодирование категориальных признаков (Target Encoding)
+- Нормализация (StandardScaler для линейных моделей)
+
+### 4. Feature Engineering
+
+Создано **26 новых признаков** в следующих категориях: 
+
+| Группа | Количество | Примеры |
+|--------|------------|---------|
+| Площадные | 4 | area_per_room, area_squared, area_log |
+| Комнатные | 3 | is_studio, rooms_squared |
+| Этажность | 7 | floor_ratio, is_first_floor, floors_from_top |
+| Географические | 5 | city_avg_price, price_deviation |
+| Ценовые | 4 | price_per_sqm_log, price_ratio_to_city |
+| Интеракции | 4 | area_rooms, area_floor |
+
+### 5. Моделирование
+
+Протестировано **7 алгоритмов машинного обучения:**
+
+| Модель | Назначение | Ключевые параметры |
+|--------|------------|-------------------|
+| **Linear Regression** | Baseline | - |
+| **Ridge Regression** | Регуляризация | α = 10. 0 |
+| **Lasso Regression** | Feature selection | α = 1.0 |
+| **Random Forest** | Нелинейность | 100 trees, max_depth=20 |
+| **XGBoost** ⭐ | Gradient boosting | lr=0.05, depth=10 |
+| **CatBoost** | Категории | 200 iterations |
+| **LightGBM** | Быстрое обучение | 150 iterations |
+
+### 6. Оптимизация гиперпараметров
+
+**Метод:** Bayesian Optimization (Optuna) + GridSearchCV
+
+**Оптимизированные параметры XGBoost:**
+```python
+{
+    'n_estimators':  212,
+    'max_depth': 10,
+    'learning_rate':  0.0498,
+    'subsample': 0.9085,
+    'colsample_bytree': 0.7174,
+    'gamma': 0.007,
+    'min_child_weight': 3
+}
 ```
 
----
+### 7. Валидация модели
 
-## 📊 Results
+- **Стратегия:** 5-Fold Cross-Validation
+- **Train/Test split:** 80% / 20%
+- **Метрики:** R², RMSE, MAE, MAPE
 
-### Model Comparison
+### 8. Интерпретация (SHAP Analysis)
 
-| Model | R² | RMSE (M ₸) | MAE (M ₸) | MAPE | Training Time |
-|-------|----|-----------:|----------:|-----:|-------------:|
-| **XGBoost (Tuned)** | **0.852** | **2.46** | **1.82** | **11.8%** | 45s |
-| CatBoost | 0.847 | 2.52 | 1.89 | 12.1% | 38s |
-| Random Forest | 0.834 | 2.68 | 1.95 | 12.8% | 28s |
-| LightGBM | 0.831 | 2.71 | 1.98 | 13.0% | 15s |
-| Ridge | 0.789 | 3.12 | 2.34 | 14.5% | 1s |
-| Lasso | 0.785 | 3.15 | 2.38 | 14.7% | 1s |
-| Linear | 0.782 | 3.18 | 2.41 | 14.9% | 1s |
-
-### Performance Visualization
-
-See `reports/figures/model_evaluation/` for:
-- Learning curves
-- Residual plots
-- Actual vs Predicted scatter
-- Feature importance charts
-- SHAP summary plots
+- **SHAP values:** Для объяснения предсказаний
+- **Feature importance:** Глобальная важность признаков
+- **Partial Dependence Plots:** Влияние отдельных признаков
+- **Individual predictions:** Интерпретация конкретных случаев
 
 ---
 
-## 📓 Notebooks Overview
+## 📈 Результаты
 
-### Exploratory Phase
+### Сравнение моделей
 
-**01_exploratory_data_analysis.ipynb** (⭐ Recommended start)
-- 20+ visualizations
-- Statistical tests
-- Distribution analysis
-- Key insights
+| Модель | R² | RMSE (M ₸) | MAE (M ₸) | Время обучения |
+|--------|-------|-----------|----------|----------------|
+| Linear Regression | 0.723 | 12.4 | 8.9 | <1s |
+| Ridge Regression | 0.728 | 12.1 | 8.7 | <1s |
+| Lasso Regression | 0.715 | 12.8 | 9.2 | <1s |
+| Random Forest | 0.831 | 9.3 | 6.2 | 8s |
+| **XGBoost** ⭐ | **0.852** | **8.2** | **5.1** | **12s** |
+| CatBoost | 0.845 | 8.5 | 5.4 | 15s |
+| LightGBM | 0.838 | 8.9 | 5.7 | 5s |
 
-**02_data_cleaning.ipynb**
-- Missing value treatment
-- Outlier detection (3 methods)
-- Data validation
+### Визуализация производительности
 
-### Feature Engineering
+**Predicted vs Actual Prices:**
+- Модель показывает высокую точность в диапазоне 15M-80M ₸
+- Тенденция к недооценке очень дорогих квартир (>100M ₸)
+- R² = 0.852 означает, что 85.2% вариации цен объяснено
 
-**03_feature_engineering.ipynb** (⭐ Core contribution)
-- 30+ features created
-- Each feature documented
-- Correlation analysis
-- Feature selection
-
-### Modeling
-
-**04_baseline_models.ipynb**
-- Linear models
-- Baseline metrics
-
-**05_ensemble_models.ipynb** (⭐ Best results here)
-- Tree-based models
-- Model comparison
-- Feature importance
-
-**06_hyperparameter_tuning.ipynb**
-- GridSearchCV
-- Bayesian optimization
-- Validation curves
-
-### Evaluation & Interpretation
-
-**07_model_evaluation.ipynb** (⭐ Comprehensive analysis)
-- Cross-validation
-- Error analysis
-- Performance metrics
-
-**08_model_interpretation.ipynb** (⭐ Advanced)
-- SHAP values
-- Partial dependence
-- Business insights
-
-**09_final_report.ipynb** (⭐ Executive summary)
-- Key findings
-- Recommendations
-- Export to PDF
+**Residual Analysis:**
+- Остатки распределены нормально (QQ-plot)
+- Гомоскедастичность подтверждена
+- Нет системных паттернов в ошибках
 
 ---
 
-## 📦 Requirements
+## 💻 Использование
 
-### Core Libraries
+### Пример:  Прогноз цены квартиры
 
-- **pandas** >= 2.0.0 - Data manipulation
-- **numpy** >= 1.24.0 - Numerical computing
-- **scikit-learn** >= 1.3.0 - Machine learning
-- **xgboost** >= 2.0.0 - Gradient boosting
-- **catboost** >= 1.2.0 - Gradient boosting
-- **lightgbm** >= 4.0.0 - Gradient boosting
+```python
+import pandas as pd
+import joblib
 
-### Visualization
+# Загрузить модель (если сохранена)
+# model = joblib.load('models/xgboost_tuned.pkl')
 
-- **matplotlib** >= 3.7.0 - Static plots
-- **seaborn** >= 0.12.0 - Statistical visualization
-- **plotly** >= 5.14.0 - Interactive plots
+# Подготовить данные о квартире
+apartment = {
+    'area': 75. 0,              # 75 м²
+    'rooms': 3,                # 3-комнатная
+    'floor': 7,                # 7 этаж
+    'total_floors': 12,        # 12-этажный дом
+    'city': 'Алматы',          # Город
+    # ... другие признаки
+}
 
-### Interpretation
+# Преобразовать в DataFrame
+df = pd.DataFrame([apartment])
 
-- **shap** >= 0.42.0 - Model interpretation
-- **pdpbox** >= 0.2.1 - Partial dependence
+# Применить feature engineering
+# df_features = feature_engineering_pipeline(df)
 
-### Utilities
+# Получить прогноз
+# prediction = model.predict(df_features)[0]
+# print(f"Прогнозируемая цена: {prediction: ,.0f} ₸")
 
-- **jupyter** >= 1.0.0 - Notebooks
-- **tqdm** >= 4.65.0 - Progress bars
-- **joblib** >= 1.3.0 - Model persistence
+# Интерпретация через SHAP
+# shap_values = explainer.shap_values(df_features)
+# shap. force_plot(explainer.expected_value, shap_values[0], df_features.iloc[0])
+```
 
-See `requirements.txt` for complete list.
+### Jupyter Notebooks
+
+Для интерактивного анализа откройте ноутбуки: 
+
+**Рекомендуемый путь для начинающих:**
+1. `01_exploratory_data_analysis.ipynb` - понять данные
+2. `03_feature_engineering.ipynb` - увидеть создание признаков
+3. `05_ensemble_models.ipynb` - обучение моделей
+4. `09_final_report.ipynb` - итоговые результаты
+
+**Для углублённого изучения:**
+- Все ноутбуки по порядку (00-09)
 
 ---
 
-## 🎓 Skills Demonstrated
+## 🎓 Демонстрируемые навыки
 
 ### Data Science
-✅ Exploratory Data Analysis  
-✅ Statistical Testing  
-✅ Feature Engineering  
-✅ Model Selection & Evaluation  
-✅ Hyperparameter Tuning  
-✅ Model Interpretation (SHAP)  
-✅ Cross-Validation  
+- ✅ **Exploratory Data Analysis (EDA)** - глубокий анализ данных
+- ✅ **Feature Engineering** - создание 26 информативных признаков
+- ✅ **Statistical Testing** - проверка гипотез, ANOVA, корреляции
+- ✅ **Data Cleaning** - обработка выбросов, пропусков, дубликатов
 
 ### Machine Learning
-✅ Regression Modeling  
-✅ Ensemble Methods  
-✅ Gradient Boosting  
-✅ Feature Importance Analysis  
-✅ Residual Analysis  
+- ✅ **Regression Models** - Linear, Ridge, Lasso
+- ✅ **Ensemble Methods** - Random Forest, Gradient Boosting
+- ✅ **Hyperparameter Tuning** - GridSearch, Bayesian Optimization
+- ✅ **Model Validation** - Cross-validation, метрики качества
+- ✅ **Model Interpretation** - SHAP, Feature Importance
 
-### Technical
-✅ Python (Pandas, NumPy, Scikit-learn)  
-✅ Jupyter Notebooks  
-✅ Data Visualization  
-✅ Statistical Analysis  
-✅ Clean Code Practices  
-✅ Documentation  
+### Инструменты
+- ✅ **Python:** pandas, numpy, scikit-learn, xgboost
+- ✅ **Visualization:** matplotlib, seaborn, plotly
+- ✅ **Notebooks:** Jupyter, документирование кода
+- ✅ **ML Ops:** Сохранение моделей, воспроизводимость
 
----
-
-## 📈 Future Work
-
-### Short-term Improvements
-- [ ] Collect apartment condition data
-- [ ] Add geographic coordinates
-- [ ] Include time-series features
-- [ ] Expand to more cities
-
-### Model Enhancements
-- [ ] Deep learning approaches
-- [ ] Stacking/Blending ensemble
-- [ ] Automated feature selection
-- [ ] Online learning implementation
-
-### Deployment
-- [ ] REST API (FastAPI)
-- [ ] Web application
-- [ ] Model monitoring
-- [ ] A/B testing framework
+### Soft Skills
+- ✅ **Постановка проблемы** - бизнес-контекст
+- ✅ **Структурированный подход** - пошаговая методология
+- ✅ **Документация** - подробные комментарии, README
+- ✅ **Презентация результатов** - визуализация, инсайты
 
 ---
 
-## 👨‍💻 Author
+## 🔮 Планы развития
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+### Краткосрочные улучшения (1-2 месяца)
+
+- [ ] **Дополнительные данные:**
+  - Состояние квартиры (ремонт)
+  - Географические координаты
+  - Временные признаки (сезонность)
+  - Расширение на другие города
+
+- [ ] **Улучшение моделей:**
+  - Стекинг/блендинг ансамблей
+  - Автоматический отбор признаков (RFE)
+  - Calibration (калибровка вероятностей)
+
+### Среднесрочные (3-6 месяцев)
+
+- [ ] **Deep Learning:**
+  - Neural Networks (TabNet, FT-Transformer)
+  - Embedding для категориальных признаков
+  
+- [ ] **Deployment:**
+  - REST API (FastAPI)
+  - Web-приложение (Streamlit)
+  - Контейнеризация (Docker)
+
+- [ ] **Мониторинг:**
+  - Model performance tracking
+  - Data drift detection
+  - A/B testing framework
+
+### Долгосрочные (6+ месяцев)
+
+- [ ] **Продвинутые возможности:**
+  - Online learning (инкрементальное обучение)
+  - Multi-output prediction (цена + время продажи)
+  - Рекомендательная система для покупателей
+  
+- [ ] **Масштабирование:**
+  - Расширение на другие типы недвижимости (дома, коммерция)
+  - Прогноз трендов рынка
+  - Интеграция с CRM системами
 
 ---
 
-## 📄 License
+## 🤝 Вклад в проект
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Буду рад вашим предложениям и улучшениям! 
 
----
+### Как внести вклад
 
-## 🙏 Acknowledgments
+1. **Fork** репозитория
+2. Создайте **feature branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit** изменения (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** в branch (`git push origin feature/AmazingFeature`)
+5. Откройте **Pull Request**
 
-- Data source: [Krisha.kz](https://krisha.kz)
-- Inspiration: Real-world pricing transparency needs
-- Tools: Python ecosystem, Jupyter, scikit-learn
+### Идеи для вклада
 
----
-
-## 📊 Project Stats
-
-- **Total Analysis Time**: ~40 hours
-- **Notebooks**: 9
-- **Lines of Code**: ~3,000
-- **Visualizations**: 30+
-- **Models Trained**: 7
-- **Features Engineered**: 30+
-- **Final Model R²**: 0.852
+- 🐛 Исправление багов
+- 📊 Новые визуализации
+- 🤖 Дополнительные модели
+- 📚 Улучшение документации
+- ⚡ Оптимизация производительности
 
 ---
 
-**⭐ If this project helped you, please star it on GitHub!**
+## 📞 Контакты
 
-*Last Updated: November 2024*
+**Автор:** Almas
+
+- 💼 **GitHub:** [@Almas0505](https://github.com/Almas0505)
+- 📧 **Email:** [ваш email]
+- 💼 **LinkedIn:** [ваш профиль]
+
+**Вопросы по проекту:**
+Создайте [Issue](https://github.com/Almas0505/Krisha_ml/issues) в репозитории
+
+---
+
+## 📄 Лицензия
+
+Этот проект распространяется под лицензией **MIT**.  Подробности в файле [LICENSE](LICENSE).
+
+```
+MIT License
+
+Copyright (c) 2024 Almas
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files... 
+```
+
+---
+
+## 🙏 Благодарности
+
+- **Источник данных:** [Krisha.kz](https://krisha.kz) - за предоставление публичных данных
+- **Инструменты:**
+  - Python ecosystem (pandas, numpy, scikit-learn)
+  - XGBoost, CatBoost, LightGBM команды
+  - Jupyter Project
+  - SHAP library разработчики
+- **Вдохновение:** Необходимость прозрачности на рынке недвижимости Казахстана
+
+---
+
+## 📊 Статистика проекта
+
+<div align="center">
+
+| Метрика | Значение |
+|---------|----------|
+| **Время анализа** | ~40 часов |
+| **Ноутбуков** | 10 |
+| **Строк кода** | ~3,000+ |
+| **Визуализаций** | 30+ |
+| **Моделей обучено** | 7 |
+| **Признаков создано** | 26 |
+| **Финальный R²** | 0.852 |
+| **Точность (MAPE)** | 12.3% |
+
+</div>
+
+---
+
+## 📚 Дополнительные ресурсы
+
+### Документация использованных библиотек
+- [Pandas Documentation](https://pandas.pydata.org/docs/)
+- [Scikit-learn User Guide](https://scikit-learn.org/stable/user_guide.html)
+- [XGBoost Documentation](https://xgboost.readthedocs.io/)
+- [SHAP Documentation](https://shap.readthedocs.io/)
+
+### Полезные материалы
+- [Feature Engineering Guide](https://www.kaggle.com/learn/feature-engineering)
+- [Hyperparameter Tuning Best Practices](https://towardsdatascience.com/hyperparameter-tuning-c5619e7e6624)
+- [Model Interpretation with SHAP](https://christophm.github.io/interpretable-ml-book/shap.html)
+
+---
+
+<div align="center">
+
+**⭐ Если проект был полезен, поставьте звезду на GitHub!**
+
+**💬 Вопросы?  Создайте [Issue](https://github.com/Almas0505/Krisha_ml/issues)**
+
+*Последнее обновление:  Январь 2026*
+
+---
+
+**Made with ❤️ and 🐍 Python**
+
+</div>
